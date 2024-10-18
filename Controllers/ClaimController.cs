@@ -10,8 +10,9 @@ using Prog_POE_Part2.Models;
 
 /// <references>
 /// Errors and bugs fixed by Claude AI
-/// https://stackoverflow.com/questions/64250102/access-localdb-data-in-a-view assisted in table creation
-/// 
+/// https://stackoverflow.com/questions/64250102/access-localdb-data-in-a-view
+/// https://getbootstrap.com/docs/4.0/components/badge/
+/// https://www.w3schools.com/html/html_tables.asp
 /// </references>
 
 namespace ST10320806Prog2.Controllers
@@ -24,12 +25,12 @@ namespace ST10320806Prog2.Controllers
         {
             _context = context;
         }
-
+        //------------------------------------------------------------------------------------------------
         public IActionResult SubmitClaim()
         {
             return View();
         }
-
+        //------------------------------------------------------------------------------------------------
         //Contains code for the submission of claims
         [HttpPost]
         public IActionResult SubmitClaim(LecturerTb lecturerClaim)
@@ -53,12 +54,12 @@ namespace ST10320806Prog2.Controllers
             }
             return View(lecturerClaim);
         }
-
+        //------------------------------------------------------------------------------------------------
         public IActionResult ClaimSubmitted()
         {
             return View();
         }
-
+        //------------------------------------------------------------------------------------------------
         [HttpGet]
         public async Task<IActionResult> VerifyClaim()//Contains code for the verification of claims
         {
@@ -68,7 +69,7 @@ namespace ST10320806Prog2.Controllers
                 .ToListAsync();
             return View(pendingClaims);
         }
-
+        //------------------------------------------------------------------------------------------------
         [HttpPost]
         public async Task<IActionResult> ApproveClaim(int id)
         {
@@ -81,7 +82,7 @@ namespace ST10320806Prog2.Controllers
             }
             return RedirectToAction("VerifyClaim");
         }
-
+        //------------------------------------------------------------------------------------------------
         [HttpPost]
         public async Task<IActionResult> RejectClaim(int id)
         {
@@ -94,7 +95,7 @@ namespace ST10320806Prog2.Controllers
             }
             return RedirectToAction("VerifyClaim");
         }
-
+        //------------------------------------------------------------------------------------------------
         [HttpGet]
         public async Task<IActionResult> TrackClaim()
         {
