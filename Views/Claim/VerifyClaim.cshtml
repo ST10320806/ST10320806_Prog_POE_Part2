@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Prog_POE_Part2.Models.ClaimTb>
+
+<body style="text-align: center; background-color: beige; font-family: Arial, sans-serif;">
+    <div class="container mt-5">
+        <h1 class="mb-4">Pending Claims</h1>
+        <table class="table table-bordered table-striped" style="background-color: white;">
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Lecturer ID</th>
+                    <th>Hours Worked</th>
+                    <th>Hourly Rate</th>
+                    <th>Total Amount</th>
+                    <th>Submission Date</th>
+                    <th>Additional Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model)
+                {
+                    <tr>
+                        <td>@claim.ClaimId</td>
+                        <td>@claim.LecturerId</td>
+                        <td>@claim.HoursWorked</td>
+                        <td>@claim.HourlyRate.ToString("C")</td>
+                        <td>@claim.Amount.ToString("C")</td>
+                        <td>@claim.SubmissionDate.ToShortDateString()</td>
+                        <td>@claim.ClaimNotes</td>
+                        <td>
+                            <form asp-action="ApproveClaim" asp-route-id="@claim.ClaimId" method="post" style="display: inline;">
+                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                            </form>
+                            <form asp-action="RejectClaim" asp-route-id="@claim.ClaimId" method="post" style="display: inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</body>

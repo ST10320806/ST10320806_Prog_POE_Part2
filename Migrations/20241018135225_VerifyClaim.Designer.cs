@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Prog_POE_Part2.Data;
 
@@ -11,9 +12,11 @@ using Prog_POE_Part2.Data;
 namespace Prog_POE_Part2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241018135225_VerifyClaim")]
+    partial class VerifyClaim
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,14 +33,7 @@ namespace Prog_POE_Part2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClaimId"));
 
-                    b.Property<string>("ClaimNotes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("HourlyRate")
-                        .HasColumnType("float");
-
-                    b.Property<double>("HoursWorked")
+                    b.Property<double>("Amount")
                         .HasColumnType("float");
 
                     b.Property<int>("LecturerId")

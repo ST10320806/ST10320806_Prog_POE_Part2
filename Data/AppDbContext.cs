@@ -10,5 +10,7 @@ namespace Prog_POE_Part2.Data
 
         public DbSet<LecturerTb> Lecturers { get; set; }
 
+        public DbSet<ClaimTb> Claims { get; set; }
+
     }
 }
