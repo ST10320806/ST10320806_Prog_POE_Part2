@@ -9,6 +9,7 @@
         <h1 class="mb-4">Track Claims</h1>
 
         <!--Code for the table design and values-->
+        <!--Table creation assisted by Claude Ai-->
         <table class="table table-bordered table-striped" style="background-color: white;">
             <thead>
                 <tr>
@@ -30,7 +31,7 @@
                         <td>@claim.LecturerId</td>
                         
                         <td>
-                            <!--Code for displaying status of various claims-->
+                            <!--Code for displaying status of various claims--><!--https://getbootstrap.com/docs/4.0/components/badge/-->
                             @switch (claim.Status)
                             {
                                 case "Pending":

@@ -2,6 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Prog_POE_Part2.Data;
 using Prog_POE_Part2.Models;
+/// <summary>
+/// Jesse Weeder
+/// ST10320806
+/// Module PROG6221
+/// </summary>
+
+/// <references>
+/// Errors and bugs fixed by Claude AI
+/// https://stackoverflow.com/questions/64250102/access-localdb-data-in-a-view assisted in table creation
+/// 
+/// </references>
 
 namespace ST10320806Prog2.Controllers
 {
