@@ -1,19 +1,19 @@
 ﻿@model Prog_POE_Part2.Models.LecturerTb
 
 <body style="text-align: center; background-color: beige; font-family: Arial, sans-serif;">
-    <div class="container mt-5">
-        <h1 class="mb-4">Submit a Claim</h1>
+    <div>
+        <h1>Submit a Claim</h1>
         <div style="border: 2px solid grey; padding: 20px; margin: auto; display: inline-block; text-align: left; background-color:cornsilk; border-radius: 15px; max-width: 400px;">
             <form asp-action="SubmitClaim" method="post" enctype="multipart/form-data">
-                <div class="form-group mb-3">
+                <div>
                     <label asp-for="HoursWorked">Hours Worked</label>
-                    <input asp-for="HoursWorked" class="form-control" type="number" step="0.01" min="0" required />
+                    <input asp-for="HoursWorked" class="form-control" required />
                 </div>
-                <div class="form-group mb-3">
+                <div>
                     <label asp-for="HourlyRate">Hourly Rate</label>
-                    <input asp-for="HourlyRate" class="form-control" type="number" step="0.01" min="0" required />
+                    <input asp-for="HourlyRate" class="form-control"  required />
                 </div>
-                <div class="form-group mb-3">
+                <div>
                     <label asp-for="ClaimNotes">Additional Notes</label>
                     <textarea asp-for="ClaimNotes" class="form-control" rows="3"></textarea>
                 </div>

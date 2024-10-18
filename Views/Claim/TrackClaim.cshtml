@@ -7,6 +7,8 @@
 <body style="text-align: center; background-color: beige; font-family: Arial, sans-serif;">
     <div class="container mt-5">
         <h1 class="mb-4">Track Claims</h1>
+
+        <!--Code for the table design and values-->
         <table class="table table-bordered table-striped" style="background-color: white;">
             <thead>
                 <tr>
@@ -28,6 +30,7 @@
                         <td>@claim.LecturerId</td>
                         
                         <td>
+                            <!--Code for displaying status of various claims-->
                             @switch (claim.Status)
                             {
                                 case "Pending":
@@ -44,6 +47,7 @@
                                     break;
                             }
                         </td>
+                        <!--Getting values from the ClaimTb table-->
                         <td>@claim.HoursWorked</td>
                         <td>@claim.HourlyRate.ToString("C")</td>
                         <td>@claim.Amount.ToString("C")</td>
@@ -53,6 +57,7 @@
                 }
             </tbody>
         </table>
+        <!-- Button to return home -->
         <a asp-controller="Home" asp-action="Index" class="btn btn-info">Return to home page</a>
     </div>
 </body>

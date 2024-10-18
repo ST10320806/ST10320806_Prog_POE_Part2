@@ -19,12 +19,13 @@ namespace ST10320806Prog2.Controllers
             return View();
         }
 
+        //Contains code for the submission of claims
         [HttpPost]
         public IActionResult SubmitClaim(LecturerTb lecturerClaim)
         {
             if (ModelState.IsValid)
             {
-                _context.Lecturers.Add(lecturerClaim);
+                _context.Lecturers.Add(lecturerClaim);//Adding data to LecturerTb
                 _context.SaveChanges();
                 var claim = new ClaimTb
                 {
@@ -35,7 +36,7 @@ namespace ST10320806Prog2.Controllers
                     HourlyRate = lecturerClaim.HourlyRate,
                     ClaimNotes = lecturerClaim.ClaimNotes
                 };
-                _context.Claims.Add(claim);
+                _context.Claims.Add(claim);//Saving claim as a new claim
                 _context.SaveChanges();
                 return RedirectToAction("ClaimSubmitted");
             }
@@ -48,7 +49,7 @@ namespace ST10320806Prog2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> VerifyClaim()
+        public async Task<IActionResult> VerifyClaim()//Contains code for the verification of claims
         {
             var pendingClaims = await _context.Claims
                 .Where(c => c.Status == "Pending")
@@ -60,6 +61,7 @@ namespace ST10320806Prog2.Controllers
         [HttpPost]
         public async Task<IActionResult> ApproveClaim(int id)
         {
+            //Code which allows the lecturer to approve a claim
             var claim = await _context.Claims.FindAsync(id);
             if (claim != null)
             {
@@ -72,6 +74,7 @@ namespace ST10320806Prog2.Controllers
         [HttpPost]
         public async Task<IActionResult> RejectClaim(int id)
         {
+            //code which allows a lecturer to reject a claim
             var claim = await _context.Claims.FindAsync(id);
             if (claim != null)
             {
@@ -84,6 +87,7 @@ namespace ST10320806Prog2.Controllers
         [HttpGet]
         public async Task<IActionResult> TrackClaim()
         {
+            //fetching data from Claims table and ordering it
             var allClaims = await _context.Claims
                 .Include(c => c.Lecturer)
                 .OrderByDescending(c => c.SubmissionDate)

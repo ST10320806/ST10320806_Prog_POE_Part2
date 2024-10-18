@@ -3,6 +3,8 @@
 <body style="text-align: center; background-color: beige; font-family: Arial, sans-serif;">
     <div class="container mt-5">
         <h1 class="mb-4">Pending Claims</h1>
+
+        <!--Table which displays claims-->
         <table class="table table-bordered table-striped" style="background-color: white;">
             <thead>
                 <tr>
@@ -19,6 +21,7 @@
             <tbody>
                 @foreach (var claim in Model)
                 {
+                    <!--Fetching data from ClaimTb Table-->
                     <tr>
                         <td>@claim.ClaimId</td>
                         <td>@claim.LecturerId</td>
@@ -27,6 +30,8 @@
                         <td>@claim.Amount.ToString("C")</td>
                         <td>@claim.SubmissionDate.ToShortDateString()</td>
                         <td>@claim.ClaimNotes</td>
+
+                        <!--Buttons to approve or reject claims-->
                         <td>
                             <form asp-action="ApproveClaim" asp-route-id="@claim.ClaimId" method="post" style="display: inline;">
                                 <button type="submit" class="btn btn-success btn-sm">Approve</button>

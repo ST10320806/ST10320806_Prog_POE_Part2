@@ -15,7 +15,7 @@ namespace Prog_POE_Part2.Models
         public LecturerTb Lecturer { get; set; }
 
         [Required]
-        public string Status { get; set; } // "Pending", "Approved", or "Rejected"
+        public string Status { get; set; } 
 
         [Required]
         public DateTime SubmissionDate { get; set; }
@@ -29,6 +29,6 @@ namespace Prog_POE_Part2.Models
         public string ClaimNotes { get; set; }
 
         [NotMapped]
-        public double Amount => HoursWorked * HourlyRate;
+        public double Amount => HoursWorked * HourlyRate; //Calculating total hours
     }
 }
