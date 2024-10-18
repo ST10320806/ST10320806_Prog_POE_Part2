@@ -80,5 +80,15 @@ namespace ST10320806Prog2.Controllers
             }
             return RedirectToAction("VerifyClaim");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> TrackClaim()
+        {
+            var allClaims = await _context.Claims
+                .Include(c => c.Lecturer)
+                .OrderByDescending(c => c.SubmissionDate)
+                .ToListAsync();
+            return View(allClaims);
+        }
     }
 }

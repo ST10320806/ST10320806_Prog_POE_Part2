@@ -1,9 +1,13 @@
-﻿<div class="container mt-5">
+﻿<body style="background-color:beige">
+<div class="container mt-5">
     <div class="alert alert-success" role="alert">
         <h4 class="alert-heading">Claim Submitted Successfully!</h4>
-        <p>Your claim has been received and will be processed shortly.</p>
-        <hr>
-        <p class="mb-0">Thank you for your submission.</p>
+        <hr>        
     </div>
-    <a asp-action="SubmitClaim" class="btn btn-primary">Submit Another Claim</a>
+    <a asp-action="SubmitClaim" class="btn btn-info">Submit Another Claim</a>
 </div>
+<div>
+    <p>Return to the home page to track your claim.</p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-info">Return to home page</a>
+    </div>
+</body>
