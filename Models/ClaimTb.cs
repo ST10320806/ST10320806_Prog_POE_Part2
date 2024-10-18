@@ -32,3 +32,5 @@ namespace Prog_POE_Part2.Models
         public double Amount => HoursWorked * HourlyRate; //Calculating total hours
     }
 }
+
+//----------------------------------------------End Of File--------------------------------------------\\

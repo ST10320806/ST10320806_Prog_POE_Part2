@@ -19,3 +19,5 @@ namespace Prog_POE_Part2.Models
         public string ClaimNotes { get; set; }
     }
 }
+
+//----------------------------------------------End Of File--------------------------------------------\\
