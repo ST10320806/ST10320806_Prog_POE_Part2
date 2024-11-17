@@ -1,28 +1,66 @@
 ﻿@model Prog_POE_Part2.Models.LecturerTb
 
-<body style="text-align: center; background-color: beige; font-family: Arial, sans-serif;">
-    <div>
-        <h1>Submit a Claim</h1>
-        <div style="border: 2px solid grey; padding: 20px; margin: auto; display: inline-block; text-align: left; background-color:cornsilk; border-radius: 15px; max-width: 400px;">
-            <form asp-action="SubmitClaim" method="post" enctype="multipart/form-data">
-                <div>
-                    <label asp-for="HoursWorked">Hours Worked</label>
-                    <input asp-for="HoursWorked" class="form-control" required />
-                </div>
-                <div>
-                    <label asp-for="HourlyRate">Hourly Rate</label>
-                    <input asp-for="HourlyRate" class="form-control"  required />
-                </div>
-                <div>
-                    <label asp-for="ClaimNotes">Additional Notes</label>
-                    <textarea asp-for="ClaimNotes" class="form-control" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-lg btn-block mt-3" style="background-color: aqua; border: none; border-radius: 15px; width: 100%;">Submit Claim</button>
-            </form>
-        </div>
-    </div>
+@{
+    ViewData["Title"] = "Submit Claim";
+}
 
-    
+<h2>Submit Claim</h2>
+<body style ="text-align: center; background-color: beige; font-family: Arial, sans-serif;">
+    <div style="border: 2px solid grey; padding: 20px; margin: auto; display: inline-block; text-align: left; background-color:cornsilk; border-radius: 15px; max-width: 400px;">
+<form asp-action="SubmitClaim" method="post">
+    <div class="form-group">
+        <label asp-for="HoursWorked"></label>
+        <input asp-for="HoursWorked" class="form-control" id="HoursWorked" />
+        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="HourlyRate"></label>
+        <input asp-for="HourlyRate" class="form-control" id="HourlyRate" />
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="CalculatedAmount">Calculated Amount:</label>
+        <input type="text" id="CalculatedAmount" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="ClaimNotes"></label>
+        <textarea asp-for="ClaimNotes" class="form-control"></textarea>
+        <span asp-validation-for="ClaimNotes" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Claim</button>
+</form>
+</div>
 </body>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#HoursWorked, #HourlyRate').on('input', function () {
+                // Get the values from the input fields
+                let hoursWorked = parseFloat($('#HoursWorked').val()) || 0;
+                let hourlyRate = parseFloat($('#HourlyRate').val()) || 0;
+
+                // Calculate the total amount
+                let totalAmount = hoursWorked * hourlyRate;
+
+                // Update the calculated amount field
+                $('#CalculatedAmount').val(totalAmount.toFixed(2));
+            });
+
+            // Prevent submission if total amount is invalid
+            $('form').submit(function (event) {
+                let hoursWorked = parseFloat($('#HoursWorked').val());
+                let hourlyRate = parseFloat($('#HourlyRate').val());
+
+                if (hoursWorked <= 0 || hourlyRate <= 0 || isNaN(hoursWorked) || isNaN(hourlyRate)) {
+                    alert("Please enter valid values for Hours Worked and Hourly Rate.");
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+}
+
 
 <!---------------------------------------------End Of File---------------------------------------------->
