@@ -37,8 +37,10 @@ namespace ST10320806Prog2.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Lecturers.Add(lecturerClaim);//Adding data to LecturerTb
+                // Save lecturer details
+                _context.Lecturers.Add(lecturerClaim);
                 _context.SaveChanges();
+
                 var claim = new ClaimTb
                 {
                     LecturerId = lecturerClaim.LecturerId,
@@ -48,10 +50,31 @@ namespace ST10320806Prog2.Controllers
                     HourlyRate = lecturerClaim.HourlyRate,
                     ClaimNotes = lecturerClaim.ClaimNotes
                 };
-                _context.Claims.Add(claim);//Saving claim as a new claim
+
+                // Validate the claim
+                if (claim.HoursWorked > ClaimValidation.MaxHoursWorked)
+                {
+                    claim.Status = "Rejected";
+                    claim.ClaimNotes = "Hours worked exceed the maximum allowed limit.";
+                }
+                else if (claim.HourlyRate < ClaimValidation.MinHourlyRate || claim.HourlyRate > ClaimValidation.MaxHourlyRate)
+                {
+                    claim.Status = "Rejected";
+                    claim.ClaimNotes = "Hourly rate is outside the allowable range.";
+                }
+                else
+                {
+                    claim.Status = "Approved";
+                    claim.ClaimNotes = "Claim approved automatically.";
+                }
+
+                // Save the claim
+                _context.Claims.Add(claim);
                 _context.SaveChanges();
+
                 return RedirectToAction("ClaimSubmitted");
             }
+
             return View(lecturerClaim);
         }
         //------------------------------------------------------------------------------------------------
@@ -105,6 +128,37 @@ namespace ST10320806Prog2.Controllers
                 .OrderByDescending(c => c.SubmissionDate)
                 .ToListAsync();
             return View(allClaims);
+        }
+
+        public async Task<IActionResult> AutoApproveClaim(int id)
+        {
+            var claim = await _context.Claims.Include(c => c.Lecturer).FirstOrDefaultAsync(c => c.ClaimId == id);
+
+            if (claim == null)
+            {
+                return NotFound("Claim not found.");
+            }
+
+            // Validate the claim based on predefined criteria
+            if (claim.HoursWorked > ClaimValidation.MaxHoursWorked)
+            {
+                claim.Status = "Rejected";
+                claim.ClaimNotes = "Hours worked exceed the maximum allowed limit.";
+            }
+            else if (claim.HourlyRate < ClaimValidation.MinHourlyRate || claim.HourlyRate > ClaimValidation.MaxHourlyRate)
+            {
+                claim.Status = "Rejected";
+                claim.ClaimNotes = "Hourly rate is outside the allowable range.";
+            }
+            else
+            {
+                claim.Status = "Approved";
+                claim.ClaimNotes = "Claim approved automatically.";
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("VerifyClaim");
         }
     }
 }
