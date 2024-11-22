@@ -13,6 +13,7 @@ using Prog_POE_Part2.Models;
 /// https://stackoverflow.com/questions/64250102/access-localdb-data-in-a-view
 /// https://getbootstrap.com/docs/4.0/components/badge/
 /// https://www.w3schools.com/html/html_tables.asp
+/// https://stackoverflow.com/questions/13384474/simple-multiplication-with-jquery
 /// </references>
 
 namespace ST10320806Prog2.Controllers
@@ -37,7 +38,7 @@ namespace ST10320806Prog2.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Save lecturer details
+                // Saving
                 _context.Lecturers.Add(lecturerClaim);
                 _context.SaveChanges();
 
@@ -51,7 +52,7 @@ namespace ST10320806Prog2.Controllers
                     ClaimNotes = lecturerClaim.ClaimNotes
                 };
 
-                // Validate the claim
+                // Validating claim
                 if (claim.HoursWorked > ClaimValidation.MaxHoursWorked)
                 {
                     claim.Status = "Rejected";
@@ -68,7 +69,7 @@ namespace ST10320806Prog2.Controllers
                     claim.ClaimNotes = "Claim approved automatically.";
                 }
 
-                // Save the claim
+                // Saving claim to the database
                 _context.Claims.Add(claim);
                 _context.SaveChanges();
 
@@ -129,19 +130,17 @@ namespace ST10320806Prog2.Controllers
                 .ToListAsync();
             return View(allClaims);
         }
-
-        
-
-        public async Task<IActionResult> AutoApproveClaim(int id)
+//------------------------------------------------------------------------------------------------//        
+        public async Task<IActionResult> AutoApproveClaim(int id) //Contains code for the automatic approval of claims
         {
             var claim = await _context.Claims.Include(c => c.Lecturer).FirstOrDefaultAsync(c => c.ClaimId == id);
 
-            if (claim == null)
+            if (claim == null)// error handling if no claim is found
             {
                 return NotFound("Claim not found.");
             }
 
-            // Validate the claim based on predefined criteria
+            // Validating the code nased off of the criteria in the ClaimValidation Model
             if (claim.HoursWorked > ClaimValidation.MaxHoursWorked)
             {
                 claim.Status = "Rejected";
@@ -159,26 +158,23 @@ namespace ST10320806Prog2.Controllers
             }
 
             await _context.SaveChangesAsync();
-
             return RedirectToAction("VerifyClaim");
         }
-
-
+//------------------------------------------------------------------------------------------------//
         public IActionResult HR()
         {
             return View();
         }
-
+//------------------------------------------------------------------------------------------------//
         [HttpGet]
-        [HttpGet]
-        public async Task<IActionResult> GenerateHRInvoice()
+        public async Task<IActionResult> GenerateInvoice()//Code for the generation of an Invoice for HR
         {
             var approvedClaims = await _context.Claims
-                .Where(c => c.Status == "Approved")
+                .Where(c => c.Status == "Approved")// only getting data with "Approved" status
                 .OrderByDescending(c => c.SubmissionDate)
                 .ToListAsync();
 
-            return View(approvedClaims);
+            return View("HR",approvedClaims);
         }
     }
 }

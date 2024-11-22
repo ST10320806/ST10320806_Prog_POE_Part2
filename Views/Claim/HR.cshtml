@@ -4,6 +4,8 @@
     <div style=" border-radius: 15px; opacity: 5; text-align: center; margin: auto;">
         <div class="container">
             <h2>Approved Claims Invoice Summary</h2>
+
+            <!-- Code for displaying all approved claims in a table invoice-->
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -12,10 +14,11 @@
                         <th>Hourly Rate</th>
                         <th>Total Amount</th>
                         <th>Submission Date</th>
+                        <th>Additional Notes</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var claim in Model)
+                    @foreach (var claim in Model)//fetching data from database
                     {
                         <tr>
                             <td>@claim.ClaimId</td>
@@ -23,14 +26,15 @@
                             <td>@claim.HourlyRate.ToString("C2")</td>
                             <td>@claim.Amount.ToString("C2")</td>
                             <td>@claim.SubmissionDate.ToShortDateString()</td>
+                            <td>@claim.ClaimNotes.ToString()</td>
                         </tr>
                     }
                 </tbody>
             </table>
             <div class="mt-3">
-                <strong>Total Claims: @Model.Count</strong>
-                <strong>Total Payout: @Model.Sum(c => c.Amount).ToString("C2")</strong>
+                <strong>Total Payout: @Model.Sum(c => c.Amount).ToString("C2")</strong><!--calculating total payout--><!--Error with calculation fixed by ClaudeAi-->
             </div>
         </div>
 </div>
 </body>
+<!---------------------------------------------End Of File---------------------------------------------->

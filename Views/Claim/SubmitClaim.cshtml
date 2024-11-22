@@ -32,31 +32,21 @@
 </div>
 </body>
 
+<!-- JavaScript code making use of JQuery to automatically calculate total amount during input -->
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!--JQuery library which needs to be included if not run locally--><!--Corrections made by ClaudeAi, also provided the link to the library-->
     <script>
         $(document).ready(function () {
             $('#HoursWorked, #HourlyRate').on('input', function () {
-                // Get the values from the input fields
+                // Getting the values from the user input
                 let hoursWorked = parseFloat($('#HoursWorked').val()) || 0;
                 let hourlyRate = parseFloat($('#HourlyRate').val()) || 0;
 
                 // Calculate the total amount
                 let totalAmount = hoursWorked * hourlyRate;
 
-                // Update the calculated amount field
+                // Updating the total amount field
                 $('#CalculatedAmount').val(totalAmount.toFixed(2));
-            });
-
-            // Prevent submission if total amount is invalid
-            $('form').submit(function (event) {
-                let hoursWorked = parseFloat($('#HoursWorked').val());
-                let hourlyRate = parseFloat($('#HourlyRate').val());
-
-                if (hoursWorked <= 0 || hourlyRate <= 0 || isNaN(hoursWorked) || isNaN(hourlyRate)) {
-                    alert("Please enter valid values for Hours Worked and Hourly Rate.");
-                    event.preventDefault();
-                }
             });
         });
     </script>
