@@ -134,7 +134,6 @@ namespace ST10320806Prog2.Controllers
         public async Task<IActionResult> AutoApproveClaim(int id) //Contains code for the automatic approval of claims
         {
             var claim = await _context.Claims.Include(c => c.Lecturer).FirstOrDefaultAsync(c => c.ClaimId == id);
-
             if (claim == null)// error handling if no claim is found
             {
                 return NotFound("Claim not found.");
