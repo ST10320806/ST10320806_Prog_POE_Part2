@@ -130,6 +130,8 @@ namespace ST10320806Prog2.Controllers
             return View(allClaims);
         }
 
+        
+
         public async Task<IActionResult> AutoApproveClaim(int id)
         {
             var claim = await _context.Claims.Include(c => c.Lecturer).FirstOrDefaultAsync(c => c.ClaimId == id);
@@ -159,6 +161,24 @@ namespace ST10320806Prog2.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("VerifyClaim");
+        }
+
+
+        public IActionResult HR()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> GenerateHRInvoice()
+        {
+            var approvedClaims = await _context.Claims
+                .Where(c => c.Status == "Approved")
+                .OrderByDescending(c => c.SubmissionDate)
+                .ToListAsync();
+
+            return View(approvedClaims);
         }
     }
 }
